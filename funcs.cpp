@@ -65,6 +65,7 @@ void getTasksFromFile(int today)
     while (buffer != tasksDay)
     {
         I_tasksFile >> buffer;
+        I_tasksFile.clear();
         if (tasksDay == 0)
             break;
     }
@@ -78,7 +79,7 @@ void getTasksFromFile(int today)
     }
     
     // Remove a empty string
-    Tasks.pop_back();
+    if (Tasks.size() > 0) { Tasks.pop_back(); }
 
     // Find a way to mark tasks as completed
     std::vector<int> completedTasks{};
@@ -107,5 +108,10 @@ int welcome()
 {
     std::cout << "Task Manager V0.1" << '\n';
     std::cout << "Read Tasks (1)" << '\t' << "Enter new Tasks (2)" << std::endl;
-    return 0;
+
+    int choice{};
+    std::cout << "Enter a number: ";
+    std::cin >> choice;
+    
+    return choice;
 }

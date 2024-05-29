@@ -16,9 +16,9 @@ int main()
 
     int choice = welcome();
 
+    
 
 
-    clearTasks();
     O_tasksFile.open("Tasks.txt", std::fstream::app);
     I_tasksFile.open("Tasks.txt");
 
@@ -46,19 +46,32 @@ int main()
         {
             std::cout << "The Tasks file could not be opened for reading." << '\n';
         }
-
-        // if tasksDay is not today then get new tasks
-        if (tasksDay != today)
+        
+        switch (choice)
         {
-            getTasksFromUser(today);
-            for (int i = 0, n = Tasks.size(); i < n; i++)
+        case 1:
+            I_tasksFile.close();
+            getTasksFromFile(today);
+            break;
+        case 2:
+            clearTasks();
+            if (tasksDay != today)
             {
-                O_tasksFile << Tasks[i] << '\n';
-            }
+                getTasksFromUser(today);
+                for (int i = 0, n = Tasks.size(); i < n; i++)
+                {
+                    O_tasksFile << Tasks[i] << '\n';
+                }
 
+            }
+            I_tasksFile.close();
+            break;
+        default:
+            std::cout << "You entered something else than 1 or 2" << std::endl;
+            break;
         }
-        I_tasksFile.close();
-        getTasksFromFile(today);
+        // if tasksDay is not today then get new tasks
+        
 
 
         // Need to close file cuz we open it to remove the contents
