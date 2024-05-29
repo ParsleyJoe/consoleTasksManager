@@ -12,21 +12,31 @@ inline int tasksDay;
 
 // Getting Tasks and putting them in the Tasks vector and the file
 void getTasksFromUser(int today)
-{
-    static int printingDate = 0;
-    std::string userTask{};
-    while (true)
+{            
+    // if tasksDay is not today then get new tasks
+    if (tasksDay != today)
     {
-        std::cout << "Enter a task (or stop to stop) : ";
-        std::cin >> userTask;
-        if (userTask == "stop")
-            break;
-        if (printingDate == 0)
+        static int printingDate = 0;
+        std::string userTask{};
+        while (true)
         {
-            O_tasksFile << today << '\n';
-            printingDate++;
+            std::cout << "Enter a task (or stop to stop) : ";
+            std::cin >> userTask;
+            if (userTask == "stop")
+                break;
+            if (printingDate == 0)
+            {
+                O_tasksFile << today << '\n';
+                printingDate++;
+            }
+            Tasks.push_back(userTask);
         }
-        Tasks.push_back(userTask);
+
+    }
+
+    for (int i = 0, n = Tasks.size(); i < n; i++)
+    {
+            O_tasksFile << Tasks[i] << '\n';
     }
 }
 
@@ -83,14 +93,20 @@ void getTasksFromFile(int today)
 
     // Find a way to mark tasks as completed
     std::vector<int> completedTasks{};
+    std::cout << "Enter 1 if completed the task: " << '\n';
     for (int i = 0; i < Tasks.size(); i++)
     {
         int comp = 0;
-        std::cout << "Enter 1 if completed the task: ";
         std::cout << Tasks.at(i) << " : ";
         std::cin >> comp;
 
         if (comp > 0) { completedTasks.push_back(i); }
+    }
+
+    std::cout << "Completed Tasks: " << '\n';
+    for (int i = 0; i < completedTasks.size(); i++)
+    {
+        std::cout << Tasks.at(completedTasks[i]) << '\t';
     }
 }
 

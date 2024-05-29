@@ -13,11 +13,7 @@ inline int tasksDay;
 int main()
 {
     int today = getDate();  // Get today's date
-
     int choice = welcome();
-
-    
-
 
     O_tasksFile.open("Tasks.txt", std::fstream::app);
     I_tasksFile.open("Tasks.txt");
@@ -55,32 +51,18 @@ int main()
             break;
         case 2:
             clearTasks();
-            if (tasksDay != today)
-            {
-                getTasksFromUser(today);
-                for (int i = 0, n = Tasks.size(); i < n; i++)
-                {
-                    O_tasksFile << Tasks[i] << '\n';
-                }
-
-            }
+            getTasksFromUser(today);
             I_tasksFile.close();
             break;
         default:
             std::cout << "You entered something else than 1 or 2" << std::endl;
             break;
         }
-        // if tasksDay is not today then get new tasks
-        
-
-
-        // Need to close file cuz we open it to remove the contents
     }
     else
     {
         std::cout << "Tasks.txt File not Found." << '\n' << "Either make a new file near the .exe or restore the file." << '\n';
     }
-
 
     return 0;
 }
